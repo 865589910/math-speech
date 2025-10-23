@@ -4924,13 +4924,14 @@ footer {
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bold;
     transition: all 0.3s;
     min-width: 60px;
     position: relative;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    color: #667eea;
 }
 
 .klotski-tile.klotski-empty {
@@ -4955,20 +4956,6 @@ footer {
     transform: scale(0.95);
 }
 
-.klotski-tile-number {
-    font-size: 1.5em;
-    color: #667eea;
-    font-weight: bold;
-    margin-bottom: 5px;
-    pointer-events: none;
-}
-
-.klotski-tile-icon {
-    font-size: 2em;
-    line-height: 1;
-    pointer-events: none;
-}
-
 /* 响应式优化 */
 @media (max-width: 768px) {
     .klotski-grid-3x3 {
@@ -4984,7 +4971,7 @@ footer {
     }
     
     .klotski-tile {
-        font-size: 1.4em;
+        font-size: 1.6em;
         min-width: 60px;
     }
     
@@ -4998,14 +4985,6 @@ footer {
     
     .klotski-grid-5x5 .klotski-tile {
         min-width: 70px;
-    }
-    
-    .klotski-tile-number {
-        font-size: 1.1em;
-    }
-    
-    .klotski-tile-icon {
-        font-size: 1.6em;
     }
     
     .klotski-stat-value {
@@ -5032,7 +5011,7 @@ footer {
     }
     
     .klotski-tile {
-        font-size: 1em;
+        font-size: 1.3em;
         border-radius: 8px;
     }
     
@@ -5046,15 +5025,6 @@ footer {
     
     .klotski-grid-5x5 .klotski-tile {
         min-width: 55px;
-    }
-    
-    .klotski-tile-number {
-        font-size: 0.95em;
-        margin-bottom: 2px;
-    }
-    
-    .klotski-tile-icon {
-        font-size: 1.3em;
     }
     
     .klotski-stats {

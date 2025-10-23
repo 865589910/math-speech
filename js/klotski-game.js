@@ -15,12 +15,7 @@ const klotskiState = {
     }
 };
 
-// 动物贴纸图标（用于替代数字）
-const animalIcons = [
-    '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', 
-    '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦',
-    '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗'
-];
+// 动物贴纸已移除，仅显示数字
 
 // 打开游戏模态框
 function openKlotskiGame() {
@@ -63,12 +58,15 @@ function backToKlotskiDifficulty() {
 
 // 选择难度并开始游戏
 function selectKlotskiDifficulty(difficulty) {
-    klotskiState.difficulty = difficulty;
+    console.log('选择难度:', difficulty);
+    klotskiState.difficulty = parseInt(difficulty);
     startKlotskiGame();
 }
 
 // 开始游戏
 function startKlotskiGame() {
+    console.log('开始游戏, 难度:', klotskiState.difficulty);
+    
     // 重置状态
     klotskiState.moves = 0;
     klotskiState.timeElapsed = 0;
@@ -88,6 +86,8 @@ function startKlotskiGame() {
     // 更新UI
     updateKlotskiUI();
     renderGrid();
+    
+    console.log('网格初始化完成, 大小:', klotskiState.difficulty);
     
     // 开始计时
     startTimer();
@@ -157,9 +157,19 @@ function shuffleArray(array) {
 // 渲染网格
 function renderGrid() {
     const container = document.getElementById('klotski-grid');
-    container.innerHTML = '';
+    if (!container) {
+        console.error('华容道网格容器未找到');
+        return;
+    }
     
     const size = klotskiState.difficulty;
+    if (!size || size < 3 || size > 5) {
+        console.error('无效的难度设置:', size);
+        return;
+    }
+    
+    // 清空容器并设置正确的类名
+    container.innerHTML = '';
     container.className = `klotski-grid klotski-grid-${size}x${size}`;
     
     for (let i = 0; i < size; i++) {
@@ -171,10 +181,7 @@ function renderGrid() {
                 tile.className = 'klotski-tile klotski-empty';
             } else {
                 tile.className = 'klotski-tile klotski-number';
-                tile.innerHTML = `
-                    <div class="klotski-tile-number">${value}</div>
-                    <div class="klotski-tile-icon">${animalIcons[value - 1]}</div>
-                `;
+                tile.textContent = value;
                 // 添加点击和触摸事件
                 tile.onclick = () => moveTile(i, j);
                 tile.ontouchend = (e) => {
@@ -360,7 +367,7 @@ function updateKlotskiUI() {
     document.getElementById('klotski-best-time').textContent = 
         bestTime === Infinity ? '--' : formatTime(bestTime);
     document.getElementById('klotski-best-efficiency').textContent = 
-        bestEfficiency === Infinity ? '--' : (bestEfficiency.toFixed(2) + ' 秒/步');
+        (bestEfficiency === Infinity || bestEfficiency == null) ? '--' : (bestEfficiency.toFixed(2) + ' 秒/步');
 }
 
 // 格式化时间
@@ -394,15 +401,25 @@ function loadBestRecords() {
     if (saved) {
         try {
             const loaded = JSON.parse(saved);
-            // 确保每个难度都有 efficiency 字段
-            for (let level in loaded) {
-                if (!loaded[level].hasOwnProperty('efficiency')) {
-                    loaded[level].efficiency = Infinity;
+            // 确保每个难度都有完整的记录结构
+            for (let level of [3, 4, 5]) {
+                if (!loaded[level]) {
+                    loaded[level] = { moves: Infinity, time: Infinity, efficiency: Infinity };
+                } else {
+                    if (loaded[level].moves == null) loaded[level].moves = Infinity;
+                    if (loaded[level].time == null) loaded[level].time = Infinity;
+                    if (loaded[level].efficiency == null) loaded[level].efficiency = Infinity;
                 }
             }
             klotskiState.bestRecords = loaded;
         } catch (e) {
             console.error('Failed to load best records:', e);
+            // 如果加载失败，重置为默认值
+            klotskiState.bestRecords = {
+                3: { moves: Infinity, time: Infinity, efficiency: Infinity },
+                4: { moves: Infinity, time: Infinity, efficiency: Infinity },
+                5: { moves: Infinity, time: Infinity, efficiency: Infinity }
+            };
         }
     }
 }
