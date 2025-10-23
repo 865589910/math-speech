@@ -275,7 +275,7 @@ function winGame() {
     
     const timeTaken = klotskiState.timeElapsed;
     const moves = klotskiState.moves;
-    const efficiency = (timeTaken / moves).toFixed(2); // 秒/步
+    const efficiency = ((timeTaken / 60) * moves).toFixed(2); // (时间÷60) × 步数
     
     // 更新最佳记录
     const difficulty = klotskiState.difficulty;
@@ -317,7 +317,7 @@ function winGame() {
                 <p>难度：${difficultyName}</p>
                 <p>用时：${formatTime(timeTaken)}</p>
                 <p>步数：${moves} 步</p>
-                <p>效率：${efficiency} 秒/步</p>
+                <p>效率：${efficiency}</p>
                 ${recordHTML}
             </div>
         </div>
@@ -367,7 +367,7 @@ function updateKlotskiUI() {
     document.getElementById('klotski-best-time').textContent = 
         bestTime === Infinity ? '--' : formatTime(bestTime);
     document.getElementById('klotski-best-efficiency').textContent = 
-        (bestEfficiency === Infinity || bestEfficiency == null) ? '--' : (bestEfficiency.toFixed(2) + ' 秒/步');
+        (bestEfficiency === Infinity || bestEfficiency == null) ? '--' : bestEfficiency.toFixed(2);
 }
 
 // 格式化时间
