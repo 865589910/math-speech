@@ -1,6 +1,6 @@
 // 数字华容道游戏
 const klotskiState = {
-    difficulty: 3, // 3x3, 4x4, 5x5
+    difficulty: 3, // 3x3, 4x4, 5x5, 6x6
     grid: [],
     emptyPos: { row: 0, col: 0 },
     moves: 0,
@@ -11,7 +11,8 @@ const klotskiState = {
     bestRecords: {
         3: { moves: Infinity, time: Infinity, efficiency: Infinity },
         4: { moves: Infinity, time: Infinity, efficiency: Infinity },
-        5: { moves: Infinity, time: Infinity, efficiency: Infinity }
+        5: { moves: Infinity, time: Infinity, efficiency: Infinity },
+        6: { moves: Infinity, time: Infinity, efficiency: Infinity }
     }
 };
 
@@ -163,7 +164,7 @@ function renderGrid() {
     }
     
     const size = klotskiState.difficulty;
-    if (!size || size < 3 || size > 5) {
+    if (!size || size < 3 || size > 6) {
         console.error('无效的难度设置:', size);
         return;
     }
@@ -302,7 +303,7 @@ function winGame() {
     
     // 显示结果
     const resultDiv = document.getElementById('klotski-result');
-    const difficultyName = ['', '', '', '简单(3×3)', '中等(4×4)', '困难(5×5)'][difficulty];
+    const difficultyName = ['', '', '', '简单(3×3)', '中等(4×4)', '困难(5×5)', '专家(6×6)'][difficulty];
     
     let recordHTML = '';
     if (newRecord) {
@@ -349,7 +350,8 @@ function updateKlotskiUI() {
     const difficultyNames = {
         3: '简单 (3×3)',
         4: '中等 (4×4)',
-        5: '困难 (5×5)'
+        5: '困难 (5×5)',
+        6: '专家 (6×6)'
     };
     
     document.getElementById('klotski-difficulty-name').textContent = difficultyNames[klotskiState.difficulty];
@@ -402,7 +404,7 @@ function loadBestRecords() {
         try {
             const loaded = JSON.parse(saved);
             // 确保每个难度都有完整的记录结构
-            for (let level of [3, 4, 5]) {
+            for (let level of [3, 4, 5, 6]) {
                 if (!loaded[level]) {
                     loaded[level] = { moves: Infinity, time: Infinity, efficiency: Infinity };
                 } else {
@@ -418,7 +420,8 @@ function loadBestRecords() {
             klotskiState.bestRecords = {
                 3: { moves: Infinity, time: Infinity, efficiency: Infinity },
                 4: { moves: Infinity, time: Infinity, efficiency: Infinity },
-                5: { moves: Infinity, time: Infinity, efficiency: Infinity }
+                5: { moves: Infinity, time: Infinity, efficiency: Infinity },
+                6: { moves: Infinity, time: Infinity, efficiency: Infinity }
             };
         }
     }

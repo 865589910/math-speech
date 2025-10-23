@@ -4917,6 +4917,11 @@ footer {
     max-width: 600px;
 }
 
+.klotski-grid-6x6 {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 650px;
+}
+
 .klotski-tile {
     aspect-ratio: 1;
     display: flex;
@@ -4970,6 +4975,10 @@ footer {
         max-width: 450px;
     }
     
+    .klotski-grid-6x6 {
+        max-width: 480px;
+    }
+    
     .klotski-tile {
         font-size: 1.6em;
         min-width: 60px;
@@ -4985,6 +4994,10 @@ footer {
     
     .klotski-grid-5x5 .klotski-tile {
         min-width: 70px;
+    }
+    
+    .klotski-grid-6x6 .klotski-tile {
+        min-width: 60px;
     }
     
     .klotski-stat-value {
@@ -5010,6 +5023,10 @@ footer {
         max-width: 340px;
     }
     
+    .klotski-grid-6x6 {
+        max-width: 360px;
+    }
+    
     .klotski-tile {
         font-size: 1.3em;
         border-radius: 8px;
@@ -5025,6 +5042,11 @@ footer {
     
     .klotski-grid-5x5 .klotski-tile {
         min-width: 55px;
+    }
+    
+    .klotski-grid-6x6 .klotski-tile {
+        min-width: 50px;
+        font-size: 1.1em;
     }
     
     .klotski-stats {
